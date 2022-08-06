@@ -20,11 +20,14 @@
         <td>
           <!-- 基于当前行的 inputVisible，来控制 input 和 button 的按需展
 示-->
+          <!-- 使用v-model和绑定blur事件，让文本框失去焦点后自动隐藏 -->
           <input
             type="text"
             class="form-control form-control-sm ipt-tag"
             v-if="row.inputVisible"
             v-focus
+            v-model.trim="row.inputValue"
+            @blur="onInputConfirm(row)"
           />
           <button
             type="button"
@@ -82,6 +85,14 @@ export default {
     // 根据 Id 删除商品信息
     onRemove(id) {
       this.goodslist = this.goodslist.filter((x) => x.id !== id)
+    },
+    onInputConfirm(row) {
+      // 1. 把用户在文本框中输入的值，预先转存到常量 val 中
+      const val = row.inputValue
+      // 2. 清空文本框的值
+      row.inputValue = ''
+      // 3. 隐藏文本框
+      row.inputVisible = false
     }
   },
   // 让文本框自动获得焦点
