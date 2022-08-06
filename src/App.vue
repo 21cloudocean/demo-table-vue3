@@ -18,6 +18,22 @@
         <!-- 循环渲染标签信息 -->
         <!-- 因为标签不重复，所以把标签做key值 -->
         <td>
+          <!-- 基于当前行的 inputVisible，来控制 input 和 button 的按需展
+示-->
+          <input
+            type="text"
+            class="form-control form-control-sm ipt-tag"
+            v-if="row.inputVisible"
+            v-focus
+          />
+          <button
+            type="button"
+            class="btn btn-primary btn-sm"
+            v-else
+            @click="row.inputVisible = true"
+          >
+            +Tag
+          </button>
           <span
             class="badge badge-warning ml-2"
             v-for="item in row.tags"
@@ -66,6 +82,12 @@ export default {
     // 根据 Id 删除商品信息
     onRemove(id) {
       this.goodslist = this.goodslist.filter((x) => x.id !== id)
+    }
+  },
+  // 让文本框自动获得焦点
+  directives: {
+    focus(el) {
+      el.focus()
     }
   },
   created() {
