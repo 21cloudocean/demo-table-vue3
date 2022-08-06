@@ -15,7 +15,16 @@
         <td>{{ index + 1 }}</td>
         <td>{{ row.goods_name }}</td>
         <td>￥{{ row.goods_price }}</td>
-        <td>{{ row.tags }}</td>
+        <!-- 循环渲染标签信息 -->
+        <!-- 因为标签不重复，所以把标签做key值 -->
+        <td>
+          <span
+            class="badge badge-warning ml-2"
+            v-for="item in row.tags"
+            :key="item"
+            >{{ item }}</span
+          >
+        </td>
         <td>
           <button
             type="button"
