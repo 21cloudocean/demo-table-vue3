@@ -21,6 +21,8 @@
           <!-- 基于当前行的 inputVisible，来控制 input 和 button 的按需展
 示-->
           <!-- 使用v-model和绑定blur事件，让文本框失去焦点后自动隐藏 -->
+          <!-- 绑定keyup事件，按下enter件即触发保存tag的method -->
+          <!-- 按下esc清空输入框内容 -->
           <input
             type="text"
             class="form-control form-control-sm ipt-tag"
@@ -28,6 +30,8 @@
             v-focus
             v-model.trim="row.inputValue"
             @blur="onInputConfirm(row)"
+            @keyup.enter="onInputConfirm(row)"
+            @keyup.esc="row.inputValue = ''"
           />
           <button
             type="button"
@@ -93,6 +97,14 @@ export default {
       row.inputValue = ''
       // 3. 隐藏文本框
       row.inputVisible = false
+
+      // 为商品添加新的 tag 标签
+
+      // 1.1 判断 val 的值是否为空，如果为空，则不进行添加
+      // 1.2 判断 val 的值是否已存在于 tags 数组中，防止重复添加
+      if (!val || row.tags.indexOf(val) !== -1) return
+      // 2. 将用户输入的内容，作为新标签 push 到当前行的 tags 数组中
+      row.tags.push(val)
     }
   },
   // 让文本框自动获得焦点
