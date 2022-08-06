@@ -17,7 +17,13 @@
         <td>￥{{ row.goods_price }}</td>
         <td>{{ row.tags }}</td>
         <td>
-          <button type="button" class="btn btn-danger btn-sm">删除</button>
+          <button
+            type="button"
+            class="btn btn-danger btn-sm"
+            @click="onRemove(row.id)"
+          >
+            删除
+          </button>
         </td>
       </template>
     </my-table>
@@ -47,6 +53,10 @@ export default {
       // 请求成功
       this.goodslist = res.data
       console.log(res.data)
+    },
+    // 根据 Id 删除商品信息
+    onRemove(id) {
+      this.goodslist = this.goodslist.filter((x) => x.id !== id)
     }
   },
   created() {
